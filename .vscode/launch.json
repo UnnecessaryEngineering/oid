@@ -1,0 +1,147 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'oid'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=oid",
+                    "--jobs=1"
+                ],
+                "filter": {
+                    "name": "oid",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "sourceLanguages": [
+                "rust"
+            ]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'encode_string'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=encode_string",
+                    "--package=oid",
+                    "--jobs=1"
+                ],
+                "filter": {
+                    "name": "encode_string",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "sourceLanguages": [
+                "rust"
+            ]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'parse_string'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=parse_string",
+                    "--package=oid",
+                    "--jobs=1"
+                ],
+                "filter": {
+                    "name": "parse_string",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "sourceLanguages": [
+                "rust"
+            ]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'parse_binary'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=parse_binary",
+                    "--package=oid",
+                    "--jobs=1"
+                ],
+                "filter": {
+                    "name": "parse_binary",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "sourceLanguages": [
+                "rust"
+            ]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'parse_binary', feature = u32",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=parse_binary",
+                    "--package=oid",
+                    "--features=u32",
+                    "--jobs=1"
+                ],
+                "filter": {
+                    "name": "parse_binary",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "sourceLanguages": [
+                "rust"
+            ]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'encode_binary'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=encode_binary",
+                    "--package=oid",
+                    "--jobs=1"
+                ],
+                "filter": {
+                    "name": "encode_binary",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "sourceLanguages": [
+                "rust"
+            ]
+        }
+    ]
+}

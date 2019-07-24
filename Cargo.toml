@@ -1,0 +1,31 @@
+[package]
+name = "oid"
+version = "0.1.0"
+authors = ["Sean Bruton <sean@unnecessary.engineering>"]
+edition = "2018"
+publish = ["crates-io"]
+description = "Rust-native library for building, parsing, and formating Object Identifiers (OIDs)"
+homepage = "https://labs.unnecessary.engineering/oid"
+repository = "https://github.com/UnnecessaryEngineering/oid"
+readme = "README.md"
+keywords = ["oid", "asn1", "x500"]
+categories = ["api-bindings", "cryptography", "data-structures", "embedded", "no-std"]
+license = "MIT OR Apache-2.0"
+include = [
+    "**/*.rs",
+    "Cargo.toml",
+]
+
+[badges]
+travis-ci = { repository = "UnnecessaryEngineering/oid", branch = "master", service = "github" }
+codecov = { repository = "UnnecessaryEngineering/oid", branch = "master", service = "github" }
+is-it-maintained-issue-resolution = { repository = "UnnecessaryEngineering/oid" }
+is-it-maintained-open-issues = { repository = "UnnecessaryEngineering/oid" }
+maintenance = { status = "actively-developed" }
+
+[dependencies]
+
+[features]
+default = ["std"]
+std = []
+u32 = []

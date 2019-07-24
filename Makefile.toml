@@ -1,0 +1,60 @@
+[config]
+
+[tasks.fuzz_parse_binary]
+toolchain = "nightly"
+command = "cargo"
+args = [
+    "fuzz",
+    "run",
+    "parse_binary"
+]
+
+[tasks.fuzz_parse_string]
+toolchain = "nightly"
+command = "cargo"
+args = [
+    "fuzz",
+    "run",
+    "parse_string"
+]
+
+[tasks.build_no_std]
+command = "cargo"
+args = [
+    "build",
+    "--no-default-features"
+]
+
+[tasks.test_no_std]
+command = "cargo"
+args = [
+    "test",
+    "--no-default-features"
+]
+
+[tasks.test_only_default]
+command = "cargo"
+args = [
+    "test"
+]
+
+[tasks.test_u32_no_std]
+command = "cargo"
+args = [
+    "test",
+    "--no-default-features",
+    "--features=u32"
+]
+
+[tasks.default]
+dependencies = [
+    "build",
+    "build_no_std"
+]
+
+[tasks.test]
+dependencies = [
+    "test_no_std",
+    "test_only_default",
+    "test_u32_no_std"
+]
