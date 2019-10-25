@@ -24,8 +24,13 @@ is-it-maintained-open-issues = { repository = "UnnecessaryEngineering/oid" }
 maintenance = { status = "actively-developed" }
 
 [dependencies]
+serde = { version = "1.0", default-features = false, optional = true }
+
+[dev-dependencies]
+bincode = "1.2"
 
 [features]
 default = ["std"]
 std = []
 u32 = []
+serde_support = ["serde"]
