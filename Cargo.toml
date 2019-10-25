@@ -1,6 +1,6 @@
 [package]
 name = "oid"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Sean Bruton <sean@unnecessary.engineering>"]
 edition = "2018"
 publish = ["crates-io"]
