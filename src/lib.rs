@@ -125,7 +125,9 @@ pub struct ObjectIdentifier {
     child_nodes: Vec<Node>,
 }
 
-fn parse_string_first_node(nodes: &mut Iterator<Item = &str>) -> Result<u8, ObjectIdentifierError> {
+fn parse_string_first_node(
+    nodes: &mut dyn Iterator<Item = &str>,
+) -> Result<u8, ObjectIdentifierError> {
     if let Some(first_child_node) = nodes.next() {
         let first_child_node: u8 = first_child_node
             .parse()
@@ -140,7 +142,7 @@ fn parse_string_first_node(nodes: &mut Iterator<Item = &str>) -> Result<u8, Obje
 }
 
 fn parse_string_child_nodes(
-    nodes: &mut Iterator<Item = &str>,
+    nodes: &mut dyn Iterator<Item = &str>,
 ) -> Result<Vec<Node>, ObjectIdentifierError> {
     let mut result: Vec<Node> = vec![];
     while let Some(node) = nodes.next() {
@@ -291,10 +293,99 @@ impl TryFrom<Vec<u8>> for ObjectIdentifier {
     }
 }
 
+#[cfg(feature = "serde_support")]
+mod serde_support {
+    use super::*;
+    use core::fmt;
+    use serde::{de, ser};
+
+    struct OidVisitor;
+
+    impl<'de> de::Visitor<'de> for OidVisitor {
+        type Value = ObjectIdentifier;
+
+        fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+            formatter.write_str("a valid buffer representing an OID")
+        }
+
+        fn visit_bytes<E>(self, v: &[u8]) -> Result<Self::Value, E>
+        where
+            E: de::Error,
+        {
+            ObjectIdentifier::try_from(v).map_err(|err| {
+                E::invalid_value(
+                    de::Unexpected::Other(match err {
+                        ObjectIdentifierError::IllegalRootNode => "illegal root node",
+                        ObjectIdentifierError::IllegalFirstChildNode => "illegal first child node",
+                        ObjectIdentifierError::IllegalChildNodeValue => "illegal child node value",
+                    }),
+                    &"a valid buffer representing an OID",
+                )
+            })
+        }
+    }
+
+    impl<'de> de::Deserialize<'de> for ObjectIdentifier {
+        fn deserialize<D>(deserializer: D) -> Result<ObjectIdentifier, D::Error>
+        where
+            D: de::Deserializer<'de>,
+        {
+            deserializer.deserialize_bytes(OidVisitor)
+        }
+    }
+
+    impl ser::Serialize for ObjectIdentifier {
+        fn serialize<S>(
+            &self,
+            serializer: S,
+        ) -> Result<<S as ser::Serializer>::Ok, <S as ser::Serializer>::Error>
+        where
+            S: ser::Serializer,
+        {
+            let encoded: Vec<u8> = self.into();
+            serializer.serialize_bytes(&encoded)
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
-
     use super::*;
+
+    #[cfg(feature = "serde_support")]
+    mod serde_support {
+        use super::*;
+
+        #[test]
+        fn bincode_serde_serialize() {
+            let expected: Vec<u8> = vec![
+                0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x02, 0x03, 0x05, 0x08,
+                0x0D, 0x15,
+            ];
+            let oid = ObjectIdentifier {
+                root: ObjectIdentifierRoot::ItuT,
+                first_node: 0x01,
+                child_nodes: vec![1, 2, 3, 5, 8, 13, 21],
+            };
+            let actual: Vec<u8> = bincode::serialize(&oid).unwrap();
+            assert_eq!(expected, actual);
+        }
+
+        #[test]
+        fn bincode_serde_deserialize() {
+            let expected = ObjectIdentifier {
+                root: ObjectIdentifierRoot::ItuT,
+                first_node: 0x01,
+                child_nodes: vec![1, 2, 3, 5, 8, 13, 21],
+            };
+            let actual: ObjectIdentifier = bincode::deserialize(&[
+                0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x02, 0x03, 0x05, 0x08,
+                0x0D, 0x15,
+            ])
+            .unwrap();
+            assert_eq!(expected, actual);
+        }
+    }
 
     #[test]
     fn encode_binary_root_node_0() {
@@ -683,5 +774,4 @@ mod tests {
         .into();
         assert_eq!(expected, actual);
     }
-
 }
