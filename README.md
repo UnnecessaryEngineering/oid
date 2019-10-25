@@ -99,16 +99,6 @@ cargo make fuzz_parse_binary
 cargo make fuzz_parse_string
 ```
 
-## License
-
- Licensed under either of [Apache License, Version 2.0](LICENSE-APACHE) or [MIT license](LICENSE-MIT) at your option.
-Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in this library by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
-
-[Object Identifiers]: https://en.wikipedia.org/wiki/Object_identifier
-[ITU]: https://en.wikipedia.org/wiki/International_Telecommunications_Union
-[cargo-edit]: https://github.com/killercup/cargo-edit
-[cargo-make]: https://github.com/sagiegurari/cargo-make
-[cargo-fuzz]: https://github.com/rust-fuzz/cargo-fuzz
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -124,3 +114,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## License
+
+ Licensed under either of [Apache License, Version 2.0](LICENSE-APACHE) or [MIT license](LICENSE-MIT) at your option.
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in this library by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
+
+[Object Identifiers]: https://en.wikipedia.org/wiki/Object_identifier
+[ITU]: https://en.wikipedia.org/wiki/International_Telecommunications_Union
+[cargo-edit]: https://github.com/killercup/cargo-edit
+[cargo-make]: https://github.com/sagiegurari/cargo-make
+[cargo-fuzz]: https://github.com/rust-fuzz/cargo-fuzz
