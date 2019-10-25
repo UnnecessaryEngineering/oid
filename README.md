@@ -1,4 +1,5 @@
 # Object Identifier Library for Rust
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 [![Build Status](https://travis-ci.org/UnnecessaryEngineering/oid.svg?branch=master)](https://travis-ci.org/UnnecessaryEngineering/oid)
 [![Crate](https://img.shields.io/crates/v/oid.svg)](https://crates.io/crates/oid)
@@ -108,3 +109,18 @@ Unless you explicitly state otherwise, any contribution intentionally submitted 
 [cargo-edit]: https://github.com/killercup/cargo-edit
 [cargo-make]: https://github.com/sagiegurari/cargo-make
 [cargo-fuzz]: https://github.com/rust-fuzz/cargo-fuzz
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/bcortier-devolutions"><img src="https://avatars2.githubusercontent.com/u/54852465?v=4" width="100px;" alt="Benoît C."/><br /><sub><b>Benoît C.</b></sub></a><br /><a href="https://github.com/UnnecessaryEngineering/oid/commits?author=bcortier-devolutions" title="Tests">⚠️</a> <a href="https://github.com/UnnecessaryEngineering/oid/commits?author=bcortier-devolutions" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
