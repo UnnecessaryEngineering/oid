@@ -362,8 +362,13 @@ mod serde_support {
         where
             S: ser::Serializer,
         {
-            let encoded: Vec<u8> = self.into();
-            serializer.serialize_bytes(&encoded)
+            if serializer.is_human_readable() {
+                let encoded: String = self.into();
+                serializer.serialize_str(&encoded)
+            } else {
+                let encoded: Vec<u8> = self.into();
+                serializer.serialize_bytes(&encoded)
+            }
         }
     }
 }
@@ -375,7 +380,7 @@ mod tests {
     #[cfg(feature = "serde_support")]
     mod serde_support {
         use super::*;
-        use serde_derive::Deserialize;
+        use serde_derive::{Deserialize, Serialize};
         use serde_xml_rs;
 
         #[test]
@@ -408,9 +413,19 @@ mod tests {
             assert_eq!(expected, actual);
         }
 
-        #[derive(Debug, Deserialize, PartialEq)]
+        #[derive(Debug, Deserialize, PartialEq, Serialize)]
         struct MyStruct {
             oid: ObjectIdentifier
+        }
+
+        #[test]
+        fn xml_serde_serialize() {
+            let mydata = MyStruct {
+                oid: ObjectIdentifier::try_from("1.2.3.5.8.13.21").unwrap()
+            };
+            let expected = r#"<MyStruct><oid>1.2.3.5.8.13.21</oid></MyStruct>"#;
+            let actual = serde_xml_rs::to_string(&mydata).unwrap();
+            assert_eq!(expected, actual);
         }
 
         #[test]
