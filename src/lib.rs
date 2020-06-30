@@ -323,6 +323,22 @@ mod serde_support {
                 )
             })
         }
+
+        fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+        where
+            E: de::Error,
+        {
+            ObjectIdentifier::try_from(v).map_err(|err| {
+                E::invalid_value(
+                    de::Unexpected::Other(match err {
+                        ObjectIdentifierError::IllegalRootNode => "illegal root node",
+                        ObjectIdentifierError::IllegalFirstChildNode => "illegal first child node",
+                        ObjectIdentifierError::IllegalChildNodeValue => "illegal child node value",
+                    }),
+                    &"a string representing an OID",
+                )
+            })
+        }
     }
 
     impl<'de> de::Deserialize<'de> for ObjectIdentifier {
@@ -330,7 +346,11 @@ mod serde_support {
         where
             D: de::Deserializer<'de>,
         {
-            deserializer.deserialize_bytes(OidVisitor)
+            if deserializer.is_human_readable() {
+                deserializer.deserialize_str(OidVisitor)
+            } else {
+                deserializer.deserialize_bytes(OidVisitor)
+            }
         }
     }
 
@@ -355,6 +375,8 @@ mod tests {
     #[cfg(feature = "serde_support")]
     mod serde_support {
         use super::*;
+        use serde_derive::Deserialize;
+        use serde_xml_rs;
 
         #[test]
         fn bincode_serde_serialize() {
@@ -383,6 +405,33 @@ mod tests {
                 0x0D, 0x15,
             ])
             .unwrap();
+            assert_eq!(expected, actual);
+        }
+
+        #[derive(Debug, Deserialize, PartialEq)]
+        struct MyStruct {
+            oid: ObjectIdentifier
+        }
+
+        #[test]
+        fn xml_serde_deserialize_element() {
+            let src = r#"<mystruct><oid>1.2.3.5.8.13.21</oid></mystruct>"#;
+
+            let expected = MyStruct {
+                oid: ObjectIdentifier::try_from("1.2.3.5.8.13.21").unwrap()
+            };
+            let actual: MyStruct = serde_xml_rs::from_str(&src).unwrap();
+            assert_eq!(expected, actual);
+        }
+
+        #[test]
+        fn xml_serde_deserialize_attribute() {
+            let src = r#"<mystruct oid="1.2.3.5.8.13.21" />"#;
+
+            let expected = MyStruct {
+                oid: ObjectIdentifier::try_from("1.2.3.5.8.13.21").unwrap()
+            };
+            let actual: MyStruct = serde_xml_rs::from_str(&src).unwrap();
             assert_eq!(expected, actual);
         }
     }
