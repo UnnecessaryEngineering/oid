@@ -1,6 +1,6 @@
 [package]
 name = "oid"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Sean Bruton <sean@unnecessary.engineering>"]
 edition = "2018"
 publish = ["crates-io"]
@@ -24,12 +24,12 @@ is-it-maintained-open-issues = { repository = "UnnecessaryEngineering/oid" }
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-serde = { version = "1.0", default-features = false, optional = true }
+serde = { version = "1.0.115", default-features = false, optional = true }
 
 [dev-dependencies]
-bincode = "1.2"
-serde_derive = "1.0"
-serde-xml-rs = "0.4"
+bincode = "1.3.1"
+serde_derive = "1.0.115"
+serde-xml-rs = "0.4.0"
 
 [features]
 default = ["std"]

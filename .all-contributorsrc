@@ -6,10 +6,30 @@
   "commit": false,
   "contributors": [
     {
+      "login": "sbruton",
+      "name": "Sean Bruton",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/961430?v=4",
+      "profile": "https://github.com/sbruton",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    },
+    {
       "login": "bcortier-devolutions",
       "name": "Benoît C.",
       "avatar_url": "https://avatars2.githubusercontent.com/u/54852465?v=4",
       "profile": "https://github.com/bcortier-devolutions",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    },
+    {
+      "login": "snake66",
+      "name": "snake66",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/852601?v=4",
+      "profile": "https://github.com/snake66",
       "contributions": [
         "test",
         "code"
